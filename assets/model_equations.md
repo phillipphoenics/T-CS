@@ -117,6 +117,63 @@ The parameter $g$ controls the effective strength of the recurrent dynamics.
 Larger $g$ usually makes the network activity more persistent and potentially
 less stable.
 
+## Linear Decoder
+
+The model can fit a linear decoder from recurrent activity back to the input
+class. The decoder target includes the silent class $0$, so:
+
+```math
+y(t) \in \mathbb{R}^{n_\text{in} + 1}
+```
+
+where $y(t)$ is one-hot encoded from the integer input stream.
+
+The decoder uses the recurrent firing rates as features. If a bias is enabled,
+the feature vector is:
+
+```math
+\tilde r(t)
+=
+\begin{bmatrix}
+r(t) \\
+1
+\end{bmatrix}
+```
+
+The fitted decoder matrix is:
+
+```math
+J_\text{out}
+=
+Y \tilde R^\top
+\left(
+\tilde R \tilde R^\top + \lambda I
+\right)^{-1}
+```
+
+Here, $\tilde R$ contains decoder features across time, $Y$ contains the
+one-hot target vectors, and $\lambda$ is the ridge regularization strength.
+
+At decode time, class scores are computed as:
+
+```math
+\hat y(t)
+=
+J_\text{out}\tilde r(t)
+```
+
+The predicted input class is the index with the largest score:
+
+```math
+\hat c(t)
+=
+\operatorname*{arg\,max}_k \hat y_k(t)
+```
+
+Decode performance is measured as the fraction of time points where
+$\hat c(t)$ matches the integer input stream. The runner reports both overall
+accuracy and accuracy restricted to time points where the input is active.
+
 ## Eigenvalue Spectrum of $J$
 
 An eigenvalue $\lambda$ and eigenvector $v$ of $J$ satisfy:

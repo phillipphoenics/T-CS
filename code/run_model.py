@@ -2,7 +2,17 @@ from pathlib import Path
 
 import numpy as np
 
-from model_setup import Array, Model, ModelConfig, build_model, make_input, step
+from model_setup import (
+    Array,
+    Model,
+    ModelConfig,
+    build_model,
+    decode,
+    decode_accuracy,
+    fit_decoder,
+    make_input,
+    step,
+)
 from plotting import (
     get_pyplot,
     plot_input_stream,
@@ -58,8 +68,21 @@ def main() -> None:
     simulation_fig = plot_simulation(firing_rates, input_stream, config)
     simulation_path = save_svg(simulation_fig, "simulation_activity.svg")
 
+    train_rates, _, train_stream = simulate(model, sequence_length=500)
+    fit_decoder(model, train_rates[:, 1:], train_stream[:-1])
+
+    test_rates, _, test_stream = simulate(model, sequence_length=100)
+    decoded_scores = decode(model, test_rates[:, 1:])
+    decode_targets = test_stream[:-1]
+    active_input_mask = decode_targets > 0
+    overall_accuracy = decode_accuracy(decoded_scores, decode_targets)
+    active_accuracy = decode_accuracy(decoded_scores, decode_targets, active_input_mask)
+
     for path in (input_path, weights_path, simulation_path):
         print(f"Saved {path.relative_to(PROJECT_ROOT)}")
+
+    print(f"Decode accuracy: {overall_accuracy:.3f}")
+    print(f"Decode accuracy while input is active: {active_accuracy:.3f}")
 
     if can_show_plots(plt):
         plt.show()
