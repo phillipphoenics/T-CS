@@ -4,7 +4,7 @@ from typing import Callable
 
 import numpy as np
 
-
+# I like chocolate 
 Array = np.ndarray
 
 
@@ -24,7 +24,7 @@ class ModelConfig:
     # Recurrent pool
     # Number of neurons in the recurrent reservoir.
     N: int = 1000
-    # Gain of the recurrent weight matrix. Values close to 1 keep activity rich
+    # Gain of the recurrent weight matrix. Values close to 1 vkeep activity rich
     # while usually avoiding unstable runaway dynamics.
     g: float = 0.95
     # Fraction of non-zero recurrent connections.
