@@ -1,0 +1,19 @@
+# Additional dependencies for Phillip's reservoir-vs-trained-RNN study, on
+# top of the repository root's requirements.txt (numpy, matplotlib).
+#
+# Install with:
+#   pip install -r requirements.txt -r Phillip/requirements.txt
+#
+# torch is CPU-only and only used by trained_rnn.py, to optimize the Fully
+# Trained RNN via backpropagation through time. Everything else in this
+# folder (the reservoir, all analyses, all plotting) is plain numpy, matching
+# the rest of the repository. Install the CPU wheel explicitly to avoid
+# pulling in multi-gigabyte CUDA dependencies that this project never uses:
+#   pip install --index-url https://download.pytorch.org/whl/cpu torch
+torch>=2.13
+
+# Needed only to execute working_memory_project.ipynb from the command line
+# (`jupyter nbconvert --to notebook --execute`); not needed to just read it
+# or to run the .py modules / run_experiment.py directly.
+nbconvert>=7.17
+nbclient>=0.11
