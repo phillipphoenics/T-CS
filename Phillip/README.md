@@ -23,6 +23,7 @@ of one participant folder per person building on the shared base code in
 | `plotting.py` | Every figure-generating function. |
 | `run_experiment.py` | Standalone, reproducible script: builds both models, runs the full analysis suite, saves every figure to `plots/` and a numeric summary to `results/summary.json`. |
 | `working_memory_project.ipynb` | The narrated version of the same pipeline, with discussion tied to the hypothesis. **Start here.** |
+| `all_source_code.ipynb` | Every module above, verbatim, as one notebook (a markdown cell with its docstring + a code cell with its code, per file, in dependency order). For anyone on the team who only works in Jupyter: run all cells once to define the whole pipeline in the notebook, then build/train/analyze/plot in cells below it, without touching a `.py` file. Generated from the `.py` files — if you edit code, prefer editing the `.py` file and regenerating this notebook so the two don't drift apart. |
 
 ## Running it
 
