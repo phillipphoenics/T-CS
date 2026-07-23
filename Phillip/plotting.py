@@ -103,7 +103,7 @@ def plot_trial_schematic(batch, trial_idx: int, config) -> "Figure":
     targets = batch.targets[trial_idx]
 
     ax[0].imshow(
-        inputs, aspect="auto", cmap=_sequential_blue_cmap(),
+        inputs, aspect="auto", cmap=_sequential_blue_cmap(), interpolation="nearest",
         extent=[time_ms[0], time_ms[-1], inputs.shape[0] - 0.5, -0.5],
     )
     ax[0].set_yticks(range(inputs.shape[0]))
@@ -111,7 +111,7 @@ def plot_trial_schematic(batch, trial_idx: int, config) -> "Figure":
     ax[0].set_title(f"Example trial (delay = {batch.delay_length_ms[trial_idx]:.0f} ms)")
 
     ax[1].imshow(
-        targets, aspect="auto", cmap=_sequential_blue_cmap(),
+        targets, aspect="auto", cmap=_sequential_blue_cmap(), interpolation="nearest",
         extent=[time_ms[0], time_ms[-1], targets.shape[0] - 0.5, -0.5],
     )
     ax[1].set_yticks(range(targets.shape[0]))
